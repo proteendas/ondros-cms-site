@@ -1003,7 +1003,7 @@
     display: grid;
     grid-template-columns: 230px minmax(0, 1fr);
     gap: 48px;
-    padding: 172px 0 84px;
+    padding: 172px 18px 84px;
   }
   .docs-sidebar {
     position: sticky;
