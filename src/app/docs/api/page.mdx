@@ -5,7 +5,7 @@ host (Swagger UI) and exported to `openapi.json` in the repo.
 
 | Plane | Auth header | Base |
 |---|---|---|
-| Delivery | `Authorization: Bearer cms_del_…` | `/spaces/{spaceId}/environments/{env}/delivery` |
+| Delivery | `Authorization: Bearer cms_del_…` | `/spaces/<spaceId>/environments/<env>/delivery` |
 | Preview | `Authorization: Bearer cms_pre_…` | same paths as delivery (drafts visible) |
 | Management | `Authorization: Bearer <JWT or cms_mgm_…>` | resource-specific, below |
 
@@ -57,18 +57,18 @@ Preview tokens use the same paths and additionally return draft entries with a
 | Area | Endpoints |
 |---|---|
 | Auth | `POST /auth/signup`, `/auth/login`, `/auth/refresh`, `/auth/switch-account`, `GET /auth/me` |
-| Accounts | `GET /accounts`, invitations CRUD, `GET/POST /accounts/{id}/sso` |
-| Spaces | `GET/POST /spaces`, `PATCH/DELETE /spaces/{id}` |
-| Environments | `GET/POST /spaces/{id}/environments`, `POST …/environments/{env}/clone` |
-| Locales | `GET/POST /spaces/{id}/locales`, `PATCH/DELETE …/locales/{localeId}` |
-| Content types | `GET/POST /spaces/{id}/environments/{env}/content-types`, `PATCH/DELETE /content-types/{id}` |
-| Entries | `GET/POST /spaces/{id}/environments/{env}/entries`, `PATCH /entries/{id}`, `POST /entries/{id}/publish|unpublish|archive`, versions under `/entries/{id}/versions` |
-| Media | `POST /spaces/{id}/environments/{env}/media` (multipart), `PATCH/DELETE /media/{id}` |
-| API keys | `GET/POST /spaces/{id}/api-keys` (token returned once) |
-| Webhooks | `GET/POST /spaces/{id}/webhooks`, delivery log per webhook |
+| Accounts | `GET /accounts`, invitations CRUD, `GET/POST /accounts/<id>/sso` |
+| Spaces | `GET/POST /spaces`, `PATCH/DELETE /spaces/<id>` |
+| Environments | `GET/POST /spaces/<id>/environments`, `POST …/environments/<env>/clone` |
+| Locales | `GET/POST /spaces/<id>/locales`, `PATCH/DELETE …/locales/<localeId>` |
+| Content types | `GET/POST /spaces/<id>/environments/<env>/content-types`, `PATCH/DELETE /content-types/<id>` |
+| Entries | `GET/POST /spaces/<id>/environments/<env>/entries`, `PATCH /entries/<id>`, `POST /entries/<id>/publish or unpublish or archive`, versions under `/entries/<id>/versions` |
+| Media | `POST /spaces/<id>/environments/<env>/media` (multipart), `PATCH/DELETE /media/<id>` |
+| API keys | `GET/POST /spaces/<id>/api-keys` (token returned once) |
+| Webhooks | `GET/POST /spaces/<id>/webhooks`, delivery log per webhook |
 | AI | `POST /ai/generate`, `/ai/rewrite`, `/ai/translate-fields`, … (see [AI Features](/docs/ai-features)) |
 | Billing | `GET /billing/plans`, `GET /billing/subscription`, `POST /billing/checkout` |
-| Audit | `GET /accounts/{id}/audit` |
+| Audit | `GET /accounts/<id>/audit` |
 
 Example — create an entry:
 

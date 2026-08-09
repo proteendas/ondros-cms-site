@@ -22,7 +22,7 @@ const CHANNELS = [
     icon: <EnvelopeAt size={20} />,
     title: 'Email support',
     text: 'Write to us for account, billing, or technical questions. Pro plans get priority responses.',
-    link: { label: 'support@ondros.io', href: 'mailto:support@ondros.io' },
+    link: { label: 'prot.das15@gmail.com', href: 'mailto:prot.das15@gmail.com' },
   },
   {
     icon: <ChatDots size={20} />,
@@ -69,7 +69,7 @@ export default function SupportPage() {
             to every message.
           </p>
           {/* MVP: mailto form (no backend on the marketing site by design — spec 009). */}
-          <form action="mailto:support@ondros.io" method="post" encType="text/plain" style={{ display: 'grid', gap: 12 }}>
+          <form action="mailto:prot.das15@gmail.com" method="post" encType="text/plain" style={{ display: 'grid', gap: 12 }}>
             <input
               name="email"
               type="email"

@@ -119,7 +119,10 @@ export default function FeaturesPage() {
         <div className="cta-band" style={{ marginTop: 60 }}>
           <h2>See it with your own content</h2>
           <p>Spin up a free workspace and model your first content type in minutes.</p>
-          <a href={APP_SIGNUP_URL} className="btn large">Get Started</a>
+          <div className="cta-actions">
+            <a href={APP_SIGNUP_URL} className="btn large">Get Started</a>
+            <Link href="/pricing" className="btn large secondary on-dark">View pricing</Link>
+          </div>
         </div>
       </div>
     </section>

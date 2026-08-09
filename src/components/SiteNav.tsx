@@ -18,6 +18,7 @@ const LINKS = [
 
 export default function SiteNav() {
   const [open, setOpen] = useState(false);
+  const [condensed, setCondensed] = useState(false);
   const pathname = usePathname();
 
   // Close the sheet on navigation and lock body scroll while open.
@@ -29,8 +30,16 @@ export default function SiteNav() {
     };
   }, [open]);
 
+  // Floating pill grows more opaque/elevated once the page has scrolled.
+  useEffect(() => {
+    const onScroll = () => setCondensed(window.scrollY > 32);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="site-nav">
+    <header className={`site-nav${condensed ? ' condensed' : ''}`}>
       <div className="container inner">
         <Link href="/" className="brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}

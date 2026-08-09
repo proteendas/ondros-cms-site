@@ -91,7 +91,7 @@ export default function LandingPage() {
           <h1>
             {BRAND.tagline.replace('.', '')}
             <br />
-            with <span style={{ color: '#a5b4fc' }}>{BRAND.short}</span>.
+            with <span>{BRAND.short}</span>.
           </h1>
           <p className="lede">
             Model content visually, edit against a live preview, generate on-brand copy with AI,
@@ -151,7 +151,10 @@ export default function LandingPage() {
           <Reveal className="cta-band">
             <h2>Ship on-brand content faster</h2>
             <p>Start free with a full workspace — spaces, environments, AI tools, and the SDK included.</p>
-            <a href={APP_SIGNUP_URL} className="btn large">Start Free</a>
+            <div className="cta-actions">
+              <a href={APP_SIGNUP_URL} className="btn large">Start Free</a>
+              <Link href="/features" className="btn large secondary on-dark">Explore all features</Link>
+            </div>
           </Reveal>
         </div>
       </section>

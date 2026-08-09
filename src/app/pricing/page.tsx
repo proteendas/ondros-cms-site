@@ -97,7 +97,7 @@ export default function PricingPage() {
                 {plan.price}
                 {plan.price.startsWith('$') && <span> /month</span>}
               </div>
-              <p style={{ color: 'var(--text-2)', fontSize: 14.5, margin: 0 }}>{plan.blurb}</p>
+              <p style={{ fontSize: 14.5, margin: 0 }}>{plan.blurb}</p>
               <ul>
                 {plan.items.map((item) => (
                   <li key={item}>
@@ -155,7 +155,10 @@ export default function PricingPage() {
         <div className="cta-band" style={{ marginTop: 60 }}>
           <h2>Not sure which plan fits?</h2>
           <p>Start on Free — every feature is there to try. Upgrade from inside the app when you need more room.</p>
-          <a href={APP_SIGNUP_URL} className="btn large">Start Free</a>
+          <div className="cta-actions">
+            <a href={APP_SIGNUP_URL} className="btn large">Start Free</a>
+            <Link href="/support" className="btn large secondary on-dark">Talk to Sales</Link>
+          </div>
         </div>
       </div>
     </section>

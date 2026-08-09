@@ -1,10 +1,28 @@
 import type { Metadata } from 'next';
+import { JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 
 import SiteFooter from '@/components/SiteFooter';
 import SiteNav from '@/components/SiteNav';
 import { BRAND } from '@/lib/brand';
 
 import './globals.css';
+
+// One grotesk (Plus Jakarta Sans) carries everything from body copy to
+// extrabold display headings, plus a mono for code. tailwind.config.ts's
+// display/label/sans keys all alias to --font-sans so the rest of
+// globals.css didn't need renaming.
+const sans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -30,8 +48,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+      <body className="bg-white font-sans text-ink-900 antialiased">
         <SiteNav />
         <main>{children}</main>
         <SiteFooter />

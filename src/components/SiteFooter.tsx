@@ -1,6 +1,6 @@
 /** Site-wide footer (spec 009). Social/docs links are placeholders. */
 import Link from 'next/link';
-import { Discord, Github, TwitterX } from 'react-bootstrap-icons';
+import { Github, Linkedin } from 'react-bootstrap-icons';
 
 import { APP_LOGIN_URL, BRAND } from '@/lib/brand';
 
@@ -10,12 +10,12 @@ export default function SiteFooter() {
       <div className="container">
         <div className="cols">
           <div>
-            <Link href="/" className="brand" style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#fff', fontWeight: 700 }}>
+            <Link href="/" className="brand font-display" style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#fff', fontWeight: 500, fontSize: 19 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={BRAND.logoIcon} alt="" width={28} height={28} style={{ borderRadius: 7 }} />
               {BRAND.name}
             </Link>
-            <p style={{ fontSize: 14, color: '#64748b', maxWidth: 260 }}>{BRAND.tagline}</p>
+            <p className="mt-3 max-w-[260px] font-sans text-sm text-ink-400">{BRAND.tagline}</p>
           </div>
           <div>
             <h4>Product</h4>
@@ -40,10 +40,12 @@ export default function SiteFooter() {
         <div className="fine">
           <span>© {new Date().getFullYear()} {BRAND.name}. All rights reserved.</span>
           <div className="socials">
-            {/* TODO: real social profiles (spec 009) */}
-            <a href="#x" aria-label="X / Twitter"><TwitterX size={16} /></a>
-            <a href="#github" aria-label="GitHub"><Github size={16} /></a>
-            <a href="#discord" aria-label="Discord"><Discord size={16} /></a>
+            <a href="https://github.com/proteendas" target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+              <Github size={16} />
+            </a>
+            <a href="https://linkedin.com/in/proteen" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+              <Linkedin size={16} />
+            </a>
           </div>
         </div>
       </div>
