@@ -29,7 +29,7 @@ const CHANNELS = [
     title: 'Community',
     text: 'Join other Ondros builders — share patterns, ask questions, see what teams are shipping.',
     // TODO: real Discord/Slack invite (spec 009)
-    link: { label: 'Join the community →', href: '#community' },
+    link: { label: 'Join the community →', href: 'https://github.com/proteendas/ondros-cms' },
   },
   {
     icon: <Activity size={20} />,

@@ -28,13 +28,13 @@ export default function SiteFooter() {
             <Link href="/docs">Documentation</Link>
             <Link href="/docs/api">API Reference</Link>
             {/* TODO: real status destination (spec 009) */}
-            <a href="#status">Status</a>
+            {/* <a href="#status">Status</a> */}
             <Link href="/support">Support</Link>
           </div>
           <div>
             <h4>Company</h4>
             <Link href="/support">Contact</Link>
-            <a href="#community">Community</a>
+            <a href="https://github.com/proteendas/ondros-cms" target="_blank" rel="noreferrer noopener">Community</a>
           </div>
         </div>
         <div className="fine">
