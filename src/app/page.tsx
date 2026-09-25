@@ -8,6 +8,7 @@ import {
   Broadcast,
   Diagram3,
   EyeFill,
+  Github,
   Globe2,
   Stars,
 } from 'react-bootstrap-icons';
@@ -29,8 +30,14 @@ const FEATURES = [
   {
     icon: <EyeFill size={20} />,
     title: 'Live preview & inline editing',
-    text: 'Edit in a split view against your real site. Click any element to jump to its field, or edit text right in the page.',
-    href: '/docs/getting-started',
+    text: 'Edit in a split view against your real site — not an approximation of it. Click any element to jump to its field, or edit the text right in the page.',
+    href: '/docs/code-sync',
+  },
+  {
+    icon: <Github size={20} />,
+    title: 'Connect your GitHub repo',
+    text: 'Point a space at the repository that builds your site and the editor previews your own pages and components, page by page and block by block.',
+    href: '/docs/code-sync',
   },
   {
     icon: <Stars size={20} />,
@@ -67,7 +74,7 @@ const FEATURES = [
 const STEPS = [
   { title: 'Model your content', text: 'Define types, fields, references, and locales in the visual builder.' },
   { title: 'Edit with confidence', text: 'Authors write with live preview, inline editing, and AI assistance.' },
-  { title: 'Preview every draft', text: 'Share draft states through preview tokens before anything goes live.' },
+  { title: 'Preview on your own site', text: 'Connect your GitHub repo and review drafts on the real page, before anything goes live.' },
   { title: 'Deliver via SDK', text: 'Fetch published content anywhere with the Ondros SDK or plain REST.' },
 ];
 

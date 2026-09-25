@@ -37,11 +37,23 @@ A content type is a schema of typed fields:
 | `media`, `media_many` | links to media assets |
 | `reference`, `reference_many` | links to entries — the building block of assemblies |
 | `json` | arbitrary structured data |
-| `slug` | URL-safe identifier, auto-generated from the display field |
+| `slug` | URL segment — **adding one makes the type's entries pages** |
 
 Any field can be **localized** (stored as `{locale: value}` maps) and carry
 validations (required, min/max length, pattern, allowed content types for
 references).
+
+### Pages and blocks
+
+A content type is addressable by URL because its model contains a `slug` field
+— nothing else marks the difference. `landing_page` and `article` have one and
+get their own URLs; reusable blocks like `hero` and `card` don't, so authors
+are never asked for a slug when creating one. A type may have at most one slug
+field, and the editor offers to add it when you create the type.
+
+This is also what decides how an entry previews: a page opens at its own URL,
+a block opens inside a page that references it. See
+[Code Sync](/docs/code-sync).
 
 ## Entries & workflow
 

@@ -22,6 +22,11 @@ Query params: `content_type`, `slug`, `q` (full-text), `locale` (`*` = raw
 maps), `include` (0–3), `order` (`field` or `-field`), `limit`, `skip`, and
 `fields.<id>=<value>` exact-match filters.
 
+An entry's `slug` is the value of its content type's slug field, so it is
+`null` for reusable blocks — types that model no slug have no URL of their own.
+Filtering by `?slug=` therefore only ever matches page-like types. See
+[Core Concepts](/docs/core-concepts).
+
 ```json
 {
   "items": [

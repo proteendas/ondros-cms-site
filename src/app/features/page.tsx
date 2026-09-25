@@ -8,6 +8,7 @@ import {
   ClockHistory,
   CreditCard,
   Diagram3,
+  Github,
   Globe2,
   Images,
   Key,
@@ -39,6 +40,12 @@ const SECTIONS = [
     title: 'AI tools',
     href: '/docs/ai-features',
     text: 'Generate whole entries from a brief, rewrite or expand a field, suggest titles, produce SEO metadata, translate between any active locales, and audit drafts against your own ingested brand guidelines (RAG). Works with free providers — Groq, Gemini, Ollama — or OpenAI/Azure.',
+  },
+  {
+    icon: <Github size={20} />,
+    title: 'Code Sync — preview your own site',
+    href: '/docs/code-sync',
+    text: 'Connect the GitHub repository that builds your site and the editor stops rendering a generic approximation: it loads your own deployed pages and edits them in place, the way Adobe\u2019s Universal Editor does. Pages preview at their real URLs; reusable blocks preview inside a page that uses them. Works with an AEM component-definition.json unchanged, or with no manifest at all.',
   },
   {
     icon: <Diagram3 size={20} />,

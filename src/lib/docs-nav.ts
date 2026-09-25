@@ -25,6 +25,7 @@ export const DOCS_NAV: DocSection[] = [
     pages: [
       { slug: 'sdk', title: 'SDK Reference' },
       { slug: 'api', title: 'API Reference' },
+      { slug: 'code-sync', title: 'Code Sync (GitHub)' },
       { slug: 'webhooks', title: 'Webhooks' },
     ],
   },

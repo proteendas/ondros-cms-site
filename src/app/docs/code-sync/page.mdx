@@ -1,0 +1,144 @@
+# Code Sync — preview your own site
+
+Most headless CMSs preview content by rendering it themselves, which means the
+preview is always an approximation. Ondros doesn't. **Connect your GitHub
+repository and the editor loads your own deployed site**, then edits it in
+place — the same arrangement as Adobe's Universal Editor.
+
+Authors see the real page: your CSS, your components, your layout.
+
+Until a space is connected, the preview pane says **Connect with GitHub for
+preview** rather than showing an approximation.
+
+## Connect a repository
+
+1. **Settings → Code Sync → Connect with GitHub.**
+2. Install the **Ondros Code Sync** app on the repository that builds your
+   site, granting read access to its contents.
+3. Pick the repository and branch. Ondros reads your component mapping
+   immediately and reports what it found.
+
+Pushes to that branch re-sync the mapping automatically. Removing the
+installation disconnects the space; your content is untouched.
+
+## Your repo needs almost nothing
+
+### 1. The bridge script
+
+One tag, served by Ondros so every site runs the same version:
+
+```html
+<script src="https://your-cms.example.com/code-sync/ondros-editor.js" defer></script>
+```
+
+It **no-ops unless the page is open inside the editor**, so it is safe to ship
+to production.
+
+### 2. Tell the editor what each element renders
+
+```html
+<section data-ondros-resource="entry:9f2c…" data-ondros-component="hero">
+  <h1 data-ondros-prop="heading"    data-ondros-type="text">Ship faster</h1>
+  <p  data-ondros-prop="subheading" data-ondros-type="text">One place …</p>
+</section>
+```
+
+| Attribute | Meaning |
+|---|---|
+| `data-ondros-resource` | `entry:<uuid>` — which entry this subtree renders |
+| `data-ondros-component` | the content type's api id |
+| `data-ondros-prop` | the field id |
+| `data-ondros-type` | `text` · `longtext` · `richtext` · `select` · `number` · `media` · `reference` |
+| `data-ondros-label` | optional label shown in the editor's overlay |
+
+Nest the wrappers freely. A landing page that renders a hero and three cards
+emits one `data-ondros-resource` per block, and every edit is attributed to the
+right entry automatically.
+
+Text fields become editable on double-click. Structured values — references,
+media, JSON — are edited in the form, because there's no sensible in-page
+representation of them.
+
+### 3. A manifest, only if you need one
+
+A repository with no manifest is mapped **by convention**: components are
+discovered from its `blocks/` directory and bound to the content type of the
+same name, with every page routed at `/{contentType}/{slug}`. Connect and
+preview — commit nothing.
+
+Commit `ondros/component-definition.json` when your project doesn't match that:
+
+```json
+{
+  "previewUrl": "https://your-site.example.com",
+  "routes": {
+    "landing_page": "/{slug}",
+    "article": "/blog/{slug}"
+  },
+  "components": [
+    {
+      "id": "hero",
+      "title": "Hero Section",
+      "contentType": "hero",
+      "block": "hero",
+      "fields": [
+        { "name": "heading", "label": "Heading", "component": "text" }
+      ]
+    }
+  ]
+}
+```
+
+**Already using Adobe's Universal Editor?** A repo with a
+`component-definition.json` (and optional `component-models.json`) in AEM's
+shape connects unchanged. A component's `id` binds to the content type with the
+same api id; override that, and add routes or a preview URL, under
+`plugins.ondros`.
+
+## Page-wise and component-wise preview
+
+Whether an entry is a page or a block is decided by your content model: a type
+is addressable because it has a `slug` field.
+
+| Entry | What the editor shows |
+|---|---|
+| Type has a slug field, filled in | The entry's own URL on your site |
+| Type has a slug field, still blank | "Fill in the slug to give this entry a URL" |
+| Type has no slug field, used on a page | That page, scrolled to the component and outlined |
+| Type has no slug field, unused | "No page references this yet" |
+
+That last pair is what makes editing a `hero` or `card` sensible. A block has
+no page of its own, so Ondros finds a page that references it — published pages
+preferred — and reveals it there.
+
+## Draft previews
+
+The editor previews **drafts**, so your site should fetch with a preview key
+(`cms_pre_…`) and skip its cache when the page is loaded with
+`?ondros-preview=1`. Ondros also passes:
+
+| Parameter | Meaning |
+|---|---|
+| `ondros-preview=1` | render drafts, uncached |
+| `ondros-locale=<code>` | the locale the editor has active |
+| `ondros-focus=<uuid>` | the block to scroll to and outline |
+
+Without a preview key the editor shows published content, and an author's
+unsaved edits appear to do nothing.
+
+## Troubleshooting
+
+| Symptom | Cause |
+|---|---|
+| "Connect with GitHub for preview" | The space has no repository connected |
+| "Code Sync isn't set up on this server" | Self-hosting without the GitHub App configured |
+| Page loads but nothing is selectable | Missing `data-ondros-*` attributes — the editor says so explicitly |
+| "No page references this … yet" | A block no page uses; add it to a page |
+| "This entry has no URL yet" | A page whose slug field is still blank |
+| Edits don't appear | The site isn't using a preview key for `?ondros-preview=1` |
+
+## A worked example
+
+[`ondros-demo-site`](https://github.com/proteendas/ondros-demo-site) is a small
+Next.js site wired up exactly this way — manifest, bridge script, instrumented
+components and draft previews — and is a good thing to copy from.
