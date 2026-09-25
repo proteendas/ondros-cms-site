@@ -1,3 +1,5 @@
+import DemoSiteLinks from '@/components/DemoSiteLinks';
+
 # Code Sync — preview your own site
 
 Most headless CMSs preview content by rendering it themselves, which means the
@@ -137,8 +139,100 @@ unsaved edits appear to do nothing.
 | "This entry has no URL yet" | A page whose slug field is still blank |
 | Edits don't appear | The site isn't using a preview key for `?ondros-preview=1` |
 
-## A worked example
+## Start from the reference project
 
-[`ondros-demo-site`](https://github.com/proteendas/ondros-demo-site) is a small
-Next.js site wired up exactly this way — manifest, bridge script, instrumented
-components and draft previews — and is a good thing to copy from.
+`ondros-demo-site` is a small Next.js site wired up exactly this way — manifest,
+bridge script, instrumented components and draft previews. It is the fastest
+way to see the whole loop working, and the easiest thing to copy from.
+
+<DemoSiteLinks />
+
+### Try it end to end
+
+1. **Fork or clone it.**
+
+   ```bash
+   git clone https://github.com/proteendas/ondros-demo-site
+   cd ondros-demo-site && npm install
+   ```
+
+2. **Point it at your space.** Copy `.env.example` to `.env.local` and fill in
+   the space id and both tokens from **Settings → API keys**:
+
+   ```bash
+   CMS_URL=https://your-cms.example.com
+   NEXT_PUBLIC_CMS_URL=https://your-cms.example.com
+   CMS_SPACE_ID=…
+   CMS_ENVIRONMENT=master
+   CMS_DELIVERY_TOKEN=cms_del_…
+   CMS_PREVIEW_TOKEN=cms_pre_…
+   ```
+
+   The **preview** token is the one people forget. Without it the editor shows
+   published content, and an author's unsaved edits look like they did nothing.
+
+3. **Give it content to render.** One command builds the whole model and fills
+   it with copy, so there is nothing to click together first:
+
+   ```bash
+   CMS_SPACE_ID=… CMS_MANAGEMENT_TOKEN=cms_mgm_… \
+     node scripts/seed-content.mjs
+   ```
+
+   That creates four content types and eight entries — a `landing_page` with
+   slug `home` referencing a `hero` and three `card` blocks, plus three
+   articles — written in English and French so the language switcher has
+   something to show. `--draft` leaves it unpublished; `--dry-run` just prints
+   the plan. Re-running tops up rather than duplicating.
+
+   The copy lives in `content/demo-content.json`, so you can rewrite it for
+   your own pitch before seeding.
+
+4. **Deploy it**, or run `npm run dev` and expose it with a tunnel. The editor
+   loads this URL in an iframe, so it has to be reachable from the browser —
+   `localhost` works when you're running the CMS locally too.
+
+5. **Connect it.** In the editor: **Settings → Code Sync**, install the app on
+   the repository, pick the branch, and set the deployment URL.
+
+6. **Open any entry.** The preview pane is now the demo site. Hover a heading
+   to see it outlined, click to jump to its field, double-click to edit in
+   place. Open a `hero` or `card` and it previews inside the page that uses it.
+
+### Copying it into an existing project
+
+Four things to port, each isolated to one place in the demo:
+
+| What | Where it lives in the demo |
+|---|---|
+| Manifest — routes and component mapping | `ondros/component-definition.json` |
+| Bridge script tag | `src/app/layout.tsx` |
+| `resource()` / `prop()` attribute helpers | `src/lib/preview.ts` |
+| Draft fetching with the preview token | `src/lib/cms.ts` |
+
+Then instrument your components: wrap each entry in `resource()` and mark its
+fields with `prop()`, as `src/app/page.tsx` does for the hero and cards.
+
+The manifest is worth reading closely, because it shows **why** you would
+commit one at all. The demo's routes don't follow the default
+`/{contentType}/{slug}` convention — articles live at `/articles/{slug}` and
+landing pages render at `/` — so it declares them:
+
+```json
+{
+  "routes": {
+    "landing_page": "/?ondros-slug={slug}",
+    "article": "/articles/{slug}"
+  }
+}
+```
+
+If your routes *do* follow the convention, delete the file and let Ondros infer
+the mapping.
+
+### Not a Next.js project?
+
+Nothing here is Next-specific. The bridge script is plain JavaScript and the
+attributes are plain HTML, so the same four pieces apply to Astro, Nuxt,
+SvelteKit, Remix, Eleventy or a hand-rolled server — anything that can render
+an attribute and include a script tag.

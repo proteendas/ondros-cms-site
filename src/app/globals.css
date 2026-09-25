@@ -1089,6 +1089,19 @@
     border-radius: 1.25rem;
     margin: 20px 0;
   }
+  /* Button pair pointing at the Code Sync reference project. Wraps on narrow
+     screens rather than overflowing the docs column. */
+  .demo-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 26px;
+  }
+  .demo-links .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
   .docs-content table {
     width: 100%;
     border-collapse: collapse;
